@@ -1,34 +1,32 @@
-#!/usr/bin/python3
-""" """
-from tests.test_models.test_base_model import test_basemodel
+from tests.test_models.test_basemodel import TestBaseModel
 from models.user import User
 
 
-class test_User(test_basemodel):
-    """ """
+class TestUser(TestBaseModel):
+    """Test class for User model"""
 
     def __init__(self, *args, **kwargs):
-        """ """
+        """Constructor"""
         super().__init__(*args, **kwargs)
         self.name = "User"
         self.value = User
 
     def test_first_name(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.first_name), str)
+        """Test that the 'first_name' attribute is a string"""
+        new = self.model_instance
+        self.assertIsInstance(new.first_name, str)
 
     def test_last_name(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.last_name), str)
+        """Test that the 'last_name' attribute is a string"""
+        new = self.model_instance
+        self.assertIsInstance(new.last_name, str)
 
     def test_email(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.email), str)
+        """Test that the 'email' attribute is a string"""
+        new = self.model_instance
+        self.assertIsInstance(new.email, str)
 
     def test_password(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.password), str)
+        """Test that the 'password' attribute is a string"""
+        new = self.model_instance
+        self.assertIsInstance(new.password, str)
