@@ -1,15 +1,30 @@
 #!/usr/bin/python3
-"""This module defines a class to manage file storage for hbnb clone"""
+"""
+This module defines a class to manage file storage for hbnb clone.
+"""
+
 import json
 
 
 class FileStorage:
-    """This class manages storage of hbnb models in JSON format"""
+    """
+    This class manages storage of hbnb models in JSON format.
+    """
+
     __file_path = 'file.json'
     __objects = {}
 
     def all(self, cls=None):
-        """Returns a dictionary of models currently in storage"""
+        """
+        Returns a dictionary of models currently in storage.
+
+        Args:
+            cls (class): The class to filter models by.
+
+        Returns:
+            dict: A dictionary containing models of the specified class.
+                  If cls is None, returns all models.
+        """
         if cls:
             filtered_dict = {}
             for key, val in FileStorage.__objects.items():
@@ -19,12 +34,19 @@ class FileStorage:
         return FileStorage.__objects
 
     def new(self, obj):
-        """Adds new object to storage dictionary"""
+        """
+        Adds a new object to the storage dictionary.
+
+        Args:
+            obj: The object to be added.
+        """
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
         FileStorage.__objects[key] = obj
 
     def save(self):
-        """Saves storage dictionary to file"""
+        """
+        Saves the storage dictionary to a file in JSON format.
+        """
         with open(FileStorage.__file_path, 'w') as f:
             temp = {}
             for key, val in FileStorage.__objects.items():
@@ -32,7 +54,9 @@ class FileStorage:
             json.dump(temp, f)
 
     def reload(self):
-        """Loads storage dictionary from file"""
+        """
+        Loads the storage dictionary from the file in JSON format.
+        """
         from models.base_model import BaseModel
         from models.user import User
         from models.place import Place
@@ -42,10 +66,10 @@ class FileStorage:
         from models.review import Review
 
         classes = {
-                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
-                    'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review
-                  }
+            'BaseModel': BaseModel, 'User': User, 'Place': Place,
+            'State': State, 'City': City, 'Amenity': Amenity,
+            'Review': Review
+        }
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
@@ -57,7 +81,12 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """Deletes obj from __objects if it's inside"""
+        """
+        Deletes obj from __objects if it's inside.
+
+        Args:
+            obj: The object to be deleted.
+        """
         if obj:
             key = "{}.{}".format(obj.__class__.__name__, obj.id)
             FileStorage.__objects.pop(key, None)
