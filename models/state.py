@@ -5,6 +5,10 @@ Module for defining the State class.
 
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, relationship
+from os import environ
+
+storage_type = environ.get('HBNB_TYPE_STORAGE')
+
 
 class State(BaseModel, Base):
     """
@@ -28,4 +32,6 @@ class State(BaseModel, Base):
             """
             Return the list of City instances with state_id equals to the current State.id.
             """
+            from models import storage
+            from models.city import City
             return [city for city in storage.all(City).values() if city.state_id == self.id]

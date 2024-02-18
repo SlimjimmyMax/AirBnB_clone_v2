@@ -4,6 +4,13 @@ This module defines a class to manage file storage for hbnb clone.
 """
 
 import json
+from models.base_model import BaseModel
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 
 class FileStorage:
@@ -28,7 +35,7 @@ class FileStorage:
         if cls:
             filtered_dict = {}
             for key, val in FileStorage.__objects.items():
-                if val.__class__ == cls:
+                if isinstance(val, cls):
                     filtered_dict[key] = val
             return filtered_dict
         return FileStorage.__objects
@@ -57,14 +64,6 @@ class FileStorage:
         """
         Loads the storage dictionary from the file in JSON format.
         """
-        from models.base_model import BaseModel
-        from models.user import User
-        from models.place import Place
-        from models.state import State
-        from models.city import City
-        from models.amenity import Amenity
-        from models.review import Review
-
         classes = {
             'BaseModel': BaseModel, 'User': User, 'Place': Place,
             'State': State, 'City': City, 'Amenity': Amenity,
@@ -90,3 +89,9 @@ class FileStorage:
         if obj:
             key = "{}.{}".format(obj.__class__.__name__, obj.id)
             FileStorage.__objects.pop(key, None)
+
+    def close(self):
+        """
+        Calls save() method to save changes to JSON file.
+        """
+        self.save()
