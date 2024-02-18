@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+# 
 from sqlalchemy.orm import sessionmaker
 
 class DBStorage:
